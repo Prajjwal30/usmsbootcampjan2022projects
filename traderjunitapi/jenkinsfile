@@ -1,4 +1,3 @@
-
 pipeline{
 agent any
 
@@ -10,31 +9,34 @@ stages{
                       steps{
                           script{
                                  try{
-                                      sh " mvn -f pom.xml clean install"
+                                      sh " mvn -f traderjunitapi/pom.xml  clean install"
                                  }
                                  catch(all){
                                       echo "Build Failed"
                                  }
                           }
                      }
-        }
+                   }
+
         stage('Test'){
                       steps{
                           script{
                                  try{
-                                      sh " mvn -f pom.xml test"
+                                      sh " mvn -f traderjunitapi/pom.xml  test"
                                  }
                                  catch(all){
                                       echo "Test Failed"
                                  }
                           }
                      }
-        }
-          stage("Test and Jacoco Static analysis"){
+                   }
+
+
+         stage("Test and Jacoco Static analysis"){
                steps{
                     script{
                         try{
-                              junit 'target/surefire-reports/**/*.xml'
+                              junit 'traderjunitapi/target/surefire-reports/**/*.xml'
                               jacoco()
                         }
                         catch(all){
@@ -43,7 +45,10 @@ stages{
                     }
                }
         }
-        
-       
-     }
-}                 
+
+
+                   
+                }
+                 
+                 
+ }
